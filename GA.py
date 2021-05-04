@@ -22,8 +22,8 @@ class Bot(object):
 class Environment(object):
     
     def __init__(self):
-        self.width = 800                    #width in pixels of the game screen
-        self.height = 800                   #height in pixels of the game screen
+        self.width = 500                    #width in pixels of the game screen
+        self.height = 500                   #height in pixels of the game screen
         self.nRows = 30                     #number of rows in our maze
         self.nColumns = 30                  #number of columns in our maze
         self.populationSize = 50            #size of the population of bots that try and solve the maze
@@ -42,6 +42,7 @@ class Environment(object):
         if self.bestCopied > self.populationSize:
             self.bestCopied = self.populationSize
 
+        # 1 is for Wall and 0 is for empty square.
         for i in range(self.nRows):
             for j in range(self.nColumns):
                 if np.random.rand() < self.wallRatio:
@@ -90,19 +91,19 @@ class Environment(object):
     
     def step(self, nAction):
         for bot in self.population:
-            if bot.dna[nAction] == 0:
+            if bot.dna[nAction] == 0:				# Move Left
                 if bot.posy > 0:
                     if self.maze[bot.posy - 1][bot.posx] == 0:
                         bot.move(0, -1)
-            elif bot.dna[nAction] == 1:
+            elif bot.dna[nAction] == 1:				# Move Right
                 if bot.posy < self.nRows - 1:
                     if self.maze[bot.posy + 1][bot.posx] == 0:
                         bot.move(0, 1)
-            elif bot.dna[nAction] == 2:
+            elif bot.dna[nAction] == 2:				# Move Down
                 if bot.posx < self.nColumns - 1:
                     if self.maze[bot.posy][bot.posx + 1] == 0:
                         bot.move(1, 0)
-            elif bot.dna[nAction] == 3:
+            elif bot.dna[nAction] == 3:				# Move Up
                 if bot.posx > 0:
                     if self.maze[bot.posy][bot.posx - 1] == 0:
                         bot.move(-1, 0)
